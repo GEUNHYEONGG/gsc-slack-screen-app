@@ -225,11 +225,10 @@ function renderTimeline() {
                 const hPx = calculateHeight(res.start, res.end);
 
                 content = `
-                <div class="card" style="height:${hPx-4}px;" onclick="openModal('${res.start}')">
-                    <span>${res.icon} ${res.title}</span>
-                    <small>${names}</small>
-                    <small>${res.start} - ${res.end}</small>
-                </div>`;
+                    <div class="card" style="height:${hPx-4}px;" onclick="openModal('${res.start}')">
+                        <span>${names}</span>
+                        <small>${res.start} - ${res.end}</small>
+                    </div>`;
             } 
             else if (!isInside) {
                 content = `<div class="empty-slot">예약가능</div>`;
