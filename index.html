@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강의실 예약 시스템</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="phone-mockup">
+        
+        <header>
+            <div class="top-nav">
+                <button class="nav-btn" id="prev-day">전날</button>
+                <button class="nav-btn today" id="today-btn">금일</button>
+                <button class="nav-btn" id="next-day">다음날</button>
+            </div>
+            <div class="header-main">
+                <div class="header-info">
+                    <h2 style="margin:0; font-size:16px; color:#333;">영진전문대</h2>
+                    <div id="current-date-text" style="font-size:12px; color:#666; font-weight:bold;">-</div>
+                </div>
+                <div class="clock" id="live-clock">00:00:00</div>
+                <button class="btn-all" id="btn-toggle-all">전체 예약표</button>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <!-- 271호는 아직 승인이 안나 숨기기 -->
+            <!-- <div class="tab active" data-room="271">271호</div> -->
+            <div class="tab" data-room="301">301호</div>
+            <div class="tab" data-room="405">405호</div>
+        </div>
+
+        <div class="status-box" id="status-bar">
+            <div style="font-size: 13px; margin-bottom: 2px;">현재 <span id="room-num-display">301</span>호</div>
+            <div id="current-status" style="font-size: 15px;"><strong>이용 가능</strong></div>
+            <div id="status-time" style="font-size: 11px; opacity: 0.9; margin-top: 2px;">-</div>
+        </div>
+
+        <div class="content" id="main-content"></div>
+
+        <div class="modal-overlay" id="detail-modal">
+            <div class="modal-content" id="modal-container">
+                <span class="close-x" id="modal-close-x">&times;</span>
+                <div class="modal-header">
+                    <div class="icon-box"><span id="modal-icon">💬</span></div>
+                    <div class="title-wrap">
+                        <div class="sub-label" style="font-size: 11px; opacity: 0.8;">예약 상세</div>
+                        <div class="main-title" id="modal-title" style="font-size: 17px; font-weight: bold;">-</div>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="info-item"><span>🕒</span> <span id="m-time">-</span></div>
+                    <div class="info-item"><span>📍</span> <span id="m-room">-</span></div>
+                    <div class="info-item"><span>📅</span> <span id="m-date">-</span></div>
+                </div>
+                <div class="info-section user-data">
+                    <div class="section-label" style="font-size: 11px; margin-bottom: 8px; opacity: 0.8;">예약자 정보</div>
+                    <div class="data-row"><span>학년</span><span id="m-grade">-</span></div>
+                    <div class="data-row"><span>이름</span><span id="m-name">-</span></div>
+                    <div class="data-row"><span>학번</span><span id="m-id">-</span></div>
+                </div>
+                <button class="btn-footer-close" id="modal-close-btn">확인</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+</body>
+</html>
