@@ -93,7 +93,8 @@ async function loadCalendarData() {
 
                     return {
                         name: match ? match[1] : parts[0],
-                        grade: match ? match[2] : "-"
+                        grade: match ? match[2] : "-",
+                        id: parts[1] || "-"   // 🔥 학번 추가
                     };
                 }).filter(p => p.name);
 
@@ -221,7 +222,15 @@ function renderTimeline() {
             let content = '';
 
             if (res) {
-                const names = res.people.map(p => `${p.name} (${p.grade})`).join(', ');
+                // 🔥 여러명 처리
+                const names = res.people.map(p => p.name).join(', ');
+                const grades = res.people.map(p => p.grade).join(', ');
+                const ids = res.people.map(p => p.id).join(', ');
+
+                // 👉 화면에 넣기
+                document.getElementById('m-name').innerText = names;
+                document.getElementById('m-grade').innerText = grades;
+                document.getElementById('m-id').innerText = ids;
                 const hPx = calculateHeight(res.start, res.end);
 
                 content = `
