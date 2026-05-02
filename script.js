@@ -5,7 +5,6 @@ const CALENDAR_MAP = {
     '434a85c7be660f180486d88d6362ff5468fe73ec5a3da754eff72fa0592506c8@group.calendar.google.com': '301',
     '6be7b63f943dcc68ec839197f0a9b5a4d378637dc5700bd579ec5e03dae2cb9a@group.calendar.google.com': '405'
 };
-// ❌ 271호 제거됨
 
 let reservationData = {}; 
 let currentDate = new Date();
@@ -94,7 +93,7 @@ async function loadCalendarData() {
                     return {
                         name: match ? match[1] : parts[0],
                         grade: match ? match[2] : "-",
-                        id: parts[1] || "-"   // 🔥 학번 추가
+                        id: parts[1] || "-"
                     };
                 }).filter(p => p.name);
 
@@ -111,8 +110,7 @@ async function loadCalendarData() {
                     end: endStr,
                     title: event.summary || "예약",
                     icon: "💬",
-                    people: people,
-                    type: "blue"
+                    people: people
                 });
             });
         }
@@ -134,8 +132,10 @@ function init() {
     document.querySelectorAll('.tab').forEach(t => {
         t.classList.toggle('active', t.dataset.room === currentRoom);
     });
+
     document.getElementById('modal-close-x').onclick = closeModal;
     document.getElementById('modal-close-btn').onclick = closeModal;
+
     document.getElementById('prev-day').onclick = () => {
         currentDate.setDate(currentDate.getDate() - 1);
         saveState();
@@ -200,8 +200,6 @@ function renderTimeline() {
     const data = reservationData[dateKey]?.[currentRoom] || [];
 
     const now = new Date();
-    const isToday = currentDate.toDateString() === now.toDateString();
-
     let startH = isShowAll ? 9 : now.getHours();
     let endH = isShowAll ? 24 : now.getHours() + 3;
 
@@ -222,20 +220,19 @@ function renderTimeline() {
             let content = '';
 
             if (res) {
-                // 🔥 여러명 처리
-                const names = res.people.map(p => p.name).join(', ');
-                const grades = res.people.map(p => p.grade).join(', ');
-                const ids = res.people.map(p => p.id).join(', ');
-
-                // 👉 화면에 넣기
-                document.getElementById('m-name').innerText = names;
-                document.getElementById('m-grade').innerText = grades;
-                document.getElementById('m-id').innerText = ids;
                 const hPx = calculateHeight(res.start, res.end);
+
+                // 🔥 대표자 + 인원
+                const leader = res.people[0]?.name || "예약자";
+                const count = res.people.length - 1;
+
+                let titleText = count > 0
+                    ? `${res.title} - ${leader} 외 ${count}명`
+                    : `${res.title} - ${leader}`;
 
                 content = `
                     <div class="card" style="height:${hPx-4}px;" onclick="openModal('${res.start}')">
-                        <span>${names}</span>
+                        <span>${titleText}</span>
                         <small>${res.start} - ${res.end}</small>
                     </div>`;
             } 
@@ -269,10 +266,15 @@ function updateAll() {
     if(active) {
         bar.classList.add('active');
 
-        const names = active.people.map(p => `${p.name}`).join(', ');
+        const leader = active.people[0]?.name || "예약자";
+        const count = active.people.length - 1;
+
+        let text = count > 0
+            ? `${active.title} - ${leader} 외 ${count}명`
+            : `${active.title} - ${leader}`;
 
         document.getElementById('current-status').innerHTML =
-            `<strong>${active.title} - ${names}</strong>`;
+            `<strong>${text}</strong>`;
 
         document.getElementById('status-time').innerText =
             `${active.start} - ${active.end}`;
@@ -301,10 +303,24 @@ window.openModal = (start) => {
     const res = data.find(r => r.start === start);
     if(!res) return;
 
-    const names = res.people.map(p => `${p.name} (${p.grade})`).join(', ');
+    const leader = res.people[0]?.name || "예약자";
+    const count = res.people.length - 1;
 
-    document.getElementById('modal-title').innerText =
-        `${res.title} - ${names}`;
+    let titleText = count > 0
+        ? `${res.title} - ${leader} 외 ${count}명`
+        : `${res.title} - ${leader}`;
+
+    document.getElementById('modal-title').innerText = titleText;
+
+    // 🔥 상세 정보
+    document.getElementById('m-name').innerText =
+        res.people.map(p => p.name).join(', ');
+
+    document.getElementById('m-grade').innerText =
+        res.people.map(p => p.grade).join(', ');
+
+    document.getElementById('m-id').innerText =
+        res.people.map(p => p.id).join(', ');
 
     document.getElementById('m-time').innerText =
         `${res.start} - ${res.end}`;
