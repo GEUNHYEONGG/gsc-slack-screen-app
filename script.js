@@ -222,7 +222,7 @@ function renderTimeline() {
             if (res) {
                 const hPx = calculateHeight(res.start, res.end);
 
-                // 🔥 대표자 + 인원
+                //  대표자 + 인원
                 const leader = res.people[0]?.name || "예약자";
                 const count = res.people.length - 1;
 
