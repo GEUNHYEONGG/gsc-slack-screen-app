@@ -1,69 +1,266 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- 
+        UTF-8:
+        한글이 깨지지 않게 해주는 문자 설정
+    -->
     <meta charset="UTF-8">
+
+    <!-- 
+        모바일 화면 크기에 맞게 자동 조절
+        핸드폰 UI처럼 보이게 할 때 중요
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 브라우저 탭 제목 -->
     <title>강의실 예약 시스템</title>
+
+    <!-- CSS 파일 연결 (디자인 담당) -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+    <!-- 
+        전체 화면을 감싸는 메인 컨테이너
+        핸드폰 앱 UI처럼 보이게 만드는 박스
+    -->
     <div class="phone-mockup">
         
+        <!-- 상단 헤더 영역 -->
         <header>
+
+            <!-- 날짜 이동 버튼 묶음 -->
             <div class="top-nav">
-                <button class="nav-btn" id="prev-day">전날</button>
-                <button class="nav-btn today" id="today-btn">금일</button>
-                <button class="nav-btn" id="next-day">다음날</button>
+
+                <!-- 하루 전 날짜로 이동 -->
+                <button class="nav-btn" id="prev-day">
+                    전날
+                </button>
+
+                <!-- 오늘 날짜로 이동 -->
+                <button class="nav-btn today" id="today-btn">
+                    금일
+                </button>
+
+                <!-- 하루 다음 날짜로 이동 -->
+                <button class="nav-btn" id="next-day">
+                    다음날
+                </button>
             </div>
+
+            <!-- 학교 이름, 날짜, 시계, 버튼 영역 -->
             <div class="header-main">
+
+                <!-- 학교 이름 + 현재 날짜 -->
                 <div class="header-info">
-                    <h2 style="margin:0; font-size:16px; color:#333;">영진전문대</h2>
-                    <div id="current-date-text" style="font-size:12px; color:#666; font-weight:bold;">-</div>
+
+                    <!-- 화면에 표시되는 제목 -->
+                    <h2 style="margin:0; font-size:16px; color:#333;">
+                        영진전문대
+                    </h2>
+
+                    <!-- 
+                        JS가 현재 날짜를 넣는 자리
+                        예: 5월 6일 (수)
+                    -->
+                    <div id="current-date-text" 
+                    style="font-size:12px; color:#666; font-weight:bold;">
+                        -
+                    </div>
                 </div>
-                <div class="clock" id="live-clock">00:00:00</div>
-                <button class="btn-all" id="btn-toggle-all">전체 예약표</button>
+
+                <!-- 
+                    실시간 시계
+                    JS가 1초마다 현재 시간으로 업데이트
+                -->
+                <div class="clock" id="live-clock">
+                    00:00:00
+                </div>
+
+                <!-- 
+                    전체 예약표 버튼
+                    누르면 09:00~24:00 전체 시간표 표시
+                -->
+                <button class="btn-all" id="btn-toggle-all">
+                    전체 예약표
+                </button>
             </div>
         </header>
 
+        <!-- 
+            강의실 선택 탭
+            data-room 값을 JS가 읽어서
+            현재 선택 강의실을 변경함
+        -->
         <div class="tabs">
-            <div class="tab" data-room="301">301호</div>
-            <div class="tab" data-room="405">405호</div>
+
+            <!-- 301호 선택 -->
+            <div class="tab" data-room="301">
+                301호
+            </div>
+
+            <!-- 405호 선택 -->
+            <div class="tab" data-room="405">
+                405호
+            </div>
         </div>
 
+        <!-- 
+            현재 강의실 상태 표시 박스
+            예약 중인지 / 이용 가능한지 표시
+        -->
         <div class="status-box" id="status-bar">
-            <div style="font-size: 13px; margin-bottom: 2px;">현재 <span id="room-num-display">301</span>호</div>
-            <div id="current-status" style="font-size: 15px;"><strong>이용 가능</strong></div>
-            <div id="status-time" style="font-size: 11px; opacity: 0.9; margin-top: 2px;">-</div>
+
+            <!-- 현재 선택된 강의실 표시 -->
+            <div style="font-size: 13px; margin-bottom: 2px;">
+                현재 
+                <span id="room-num-display">301</span>호
+            </div>
+
+            <!-- 
+                현재 상태 표시
+                예:
+                이용 가능
+                또는
+                예약중
+            -->
+            <div id="current-status" style="font-size: 15px;">
+                <strong>이용 가능</strong>
+            </div>
+
+            <!-- 예약 시간 표시 -->
+            <div id="status-time" 
+            style="font-size: 11px; opacity: 0.9; margin-top: 2px;">
+                -
+            </div>
         </div>
 
+        <!-- 
+            예약 시간표가 들어가는 영역
+            JS가 시간표를 동적으로 생성해서 넣음
+        -->
         <div class="content" id="main-content"></div>
 
+        <!-- 
+            예약 상세 모달(팝업)
+            예약 카드를 클릭하면 열림
+        -->
         <div class="modal-overlay" id="detail-modal">
+
+            <!-- 실제 팝업 내용 -->
             <div class="modal-content" id="modal-container">
-                <span class="close-x" id="modal-close-x">&times;</span>
+
+                <!-- 오른쪽 위 X 닫기 버튼 -->
+                <span class="close-x" id="modal-close-x">
+                    &times;
+                </span>
+
+                <!-- 팝업 상단 영역 -->
                 <div class="modal-header">
-                    <div class="icon-box"><span id="modal-icon">💬</span></div>
+
+                    <!-- 예약 아이콘 -->
+                    <div class="icon-box">
+                        <span id="modal-icon">💬</span>
+                    </div>
+
+                    <!-- 예약 제목 -->
                     <div class="title-wrap">
-                        <div class="sub-label" style="font-size: 11px; opacity: 0.8;">예약 상세</div>
-                        <div class="main-title" id="modal-title" style="font-size: 17px; font-weight: bold;">-</div>
+
+                        <!-- 작은 설명 -->
+                        <div class="sub-label" 
+                        style="font-size: 11px; opacity: 0.8;">
+                            예약 상세
+                        </div>
+
+                        <!-- 
+                            JS가 예약 제목을 넣음
+                            예:
+                            테스트 - 김근형 외 1명
+                        -->
+                        <div class="main-title" 
+                        id="modal-title" 
+                        style="font-size: 17px; font-weight: bold;">
+                            -
+                        </div>
                     </div>
                 </div>
+
+                <!-- 예약 시간 / 강의실 / 날짜 -->
                 <div class="info-section">
-                    <div class="info-item"><span>🕒</span> <span id="m-time">-</span></div>
-                    <div class="info-item"><span>📍</span> <span id="m-room">-</span></div>
-                    <div class="info-item"><span>📅</span> <span id="m-date">-</span></div>
+
+                    <!-- 예약 시간 -->
+                    <div class="info-item">
+                        <span>🕒</span>
+                        <span id="m-time">-</span>
+                    </div>
+
+                    <!-- 예약 강의실 -->
+                    <div class="info-item">
+                        <span>📍</span>
+                        <span id="m-room">-</span>
+                    </div>
+
+                    <!-- 예약 날짜 -->
+                    <div class="info-item">
+                        <span>📅</span>
+                        <span id="m-date">-</span>
+                    </div>
                 </div>
+
+                <!-- 예약자 정보 영역 -->
                 <div class="info-section user-data">
-                    <div class="section-label" style="font-size: 11px; margin-bottom: 8px; opacity: 0.8;">예약자 정보</div>
-                    <div class="data-row"><span>학년</span><span id="m-grade">-</span></div>
-                    <div class="data-row"><span>이름</span><span id="m-name">-</span></div>
-                    <div class="data-row"><span>학번</span><span id="m-id">-</span></div>
+
+                    <!-- 제목 -->
+                    <div class="section-label" 
+                    style="font-size: 11px; margin-bottom: 8px; opacity: 0.8;">
+                        예약자 정보
+                    </div>
+
+                    <!-- 예약자 학년 -->
+                    <div class="data-row">
+                        <span>학년</span>
+                        <span id="m-grade">-</span>
+                    </div>
+
+                    <!-- 예약자 이름 -->
+                    <div class="data-row">
+                        <span>이름</span>
+                        <span id="m-name">-</span>
+                    </div>
+
+                    <!-- 예약자 학번 -->
+                    <div class="data-row">
+                        <span>학번</span>
+                        <span id="m-id">-</span>
+                    </div>
                 </div>
-                <button class="btn-footer-close" id="modal-close-btn">확인</button>
+
+                <!-- 팝업 닫기 버튼 -->
+                <button class="btn-footer-close" id="modal-close-btn">
+                    확인
+                </button>
             </div>
         </div>
     </div>
+
+    <!-- 
+        script.js 연결
+        예약 기능, 날짜 변경, 모달 기능 등을 담당
+    -->
     <script src="script.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+
+    <!-- 
+        Google Calendar API 연결
+        로딩 완료 후 gapiLoaded() 실행
+    -->
+    <script 
+        async 
+        defer 
+        src="https://apis.google.com/js/api.js" 
+        onload="gapiLoaded()">
+    </script>
+
 </body>
 </html>
