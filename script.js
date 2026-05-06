@@ -186,6 +186,8 @@ function init() {
         updateAll();
         loadCalendarData();
     }, 60000);
+    renderTimeline();
+
 }
 
 /* --- 시간 계산 --- */
