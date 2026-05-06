@@ -1,5 +1,5 @@
 /* --- 설정 영역 --- */
-const API_KEY = '***REMOVED***'; 
+const API_KEY = ''; 
 
 const CALENDAR_MAP = {
     '434a85c7be660f180486d88d6362ff5468fe73ec5a3da754eff72fa0592506c8@group.calendar.google.com': '301',
@@ -69,7 +69,6 @@ async function loadCalendarData() {
                 singleEvents: true,
                 orderBy: 'startTime',
             });
-
             const events = response.result.items;
 
             events.forEach(event => {
@@ -157,11 +156,20 @@ function init() {
         loadCalendarData();
     };
 
-    document.getElementById('btn-toggle-all').onclick = () => {
-        isShowAll = !isShowAll;
-        saveState();
-        renderTimeline();
-    };
+    const toggleBtn = document.getElementById('btn-toggle-all');
+
+        toggleBtn.onclick = () => {
+            isShowAll = !isShowAll;
+            saveState();
+
+            // 🔥 버튼 텍스트 변경
+            toggleBtn.innerText = isShowAll ? "되돌아가기" : "전체 예약표";
+
+            // 🔥 색상 변경
+            toggleBtn.style.background = isShowAll ? "#ff6b6b" : "#20c997";
+
+            renderTimeline();
+        };
 
     document.querySelectorAll('.tab').forEach(t => {
         t.onclick = () => {
