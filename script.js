@@ -4,7 +4,7 @@
 
 /* --- 설정 영역 --- */
 
-const API_KEY = '-- YOUR GOOGLE API KEY HERE --';
+const API_KEY = '***REMOVED***';
 
 const CALENDAR_MAP = {
     '434a85c7be660f180486d88d6362ff5468fe73ec5a3da754eff72fa0592506c8@group.calendar.google.com': '301',
@@ -240,6 +240,8 @@ function renderTimeline() {
     } else {
         const nowMin = now.getHours() * 60 + now.getMinutes();
 
+        const roundedNowMin = Math.ceil(nowMin / 15) * 15;
+
         const activeReservation = data.find(r =>
             nowMin >= toMin(r.start) && nowMin < toMin(r.end)
         );
@@ -247,10 +249,10 @@ function renderTimeline() {
         if (activeReservation) {
             startMin = toMin(activeReservation.start);
         } else {
-            startMin = Math.ceil(nowMin / 15) * 15;
+            startMin = roundedNowMin;
         }
 
-        endMin = startMin + 180;
+        endMin = roundedNowMin + 180;
     }
 
     for (let min = startMin; min < endMin; min += 15) {
