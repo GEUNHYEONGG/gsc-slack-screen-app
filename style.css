@@ -102,7 +102,7 @@ header {
     background: #20c997;
     color: white;
     border: none;
-    padding: 6px 12px;
+    padding: 10px 12px;
     border-radius: 8px;
     font-size: 11px;
     font-weight: bold;
@@ -120,7 +120,7 @@ header {
 .tab {
     flex: 1;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #dee2e6;
     border-radius: 12px;
     cursor: pointer;
