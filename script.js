@@ -130,7 +130,9 @@ async function loadCalendarData() {
 
         if (!room) return;
 
-        const exists = reservationData[dateKey][room].some((r) => r.start === startStr && r.end === endStr);
+        const exists = reservationData[dateKey][room].some(
+          (r) => r.start === startStr && r.end === endStr
+        );
 
         if (exists) return;
 
@@ -240,6 +242,19 @@ function calculateHeight(s, e) {
   return ((toMin(e) - toMin(s)) / 15) * 40;
 }
 
+/* --- 사용자 정보 여부 --- */
+
+function hasRealUserInfo(people) {
+  return people.some(
+    (p) =>
+      p.name &&
+      p.name !== "-" &&
+      p.name !== "예약자" &&
+      p.grade !== "-" &&
+      p.id !== "-"
+  );
+}
+
 /* --- 시간표 그리기 --- */
 
 function renderTimeline() {
@@ -262,7 +277,9 @@ function renderTimeline() {
 
     const roundedNowMin = Math.ceil(nowMin / 15) * 15;
 
-    const activeReservation = data.find((r) => nowMin >= toMin(r.start) && nowMin < toMin(r.end));
+    const activeReservation = data.find(
+      (r) => nowMin >= toMin(r.start) && nowMin < toMin(r.end)
+    );
 
     if (activeReservation) {
       startMin = toMin(activeReservation.start);
@@ -277,11 +294,17 @@ function renderTimeline() {
     const h = Math.floor(min / 60);
     const m = min % 60;
 
-    const timeStr = `${String(h).padStart(2, "0")}:` + `${String(m).padStart(2, "0")}`;
+    const timeStr =
+      `${String(h).padStart(2, "0")}:` +
+      `${String(m).padStart(2, "0")}`;
 
     const res = data.find((r) => r.start === timeStr);
 
-    const isInside = data.find((r) => toMin(timeStr) > toMin(r.start) && toMin(timeStr) < toMin(r.end));
+    const isInside = data.find(
+      (r) =>
+        toMin(timeStr) > toMin(r.start) &&
+        toMin(timeStr) < toMin(r.end)
+    );
 
     const row = document.createElement("div");
     row.className = "time-row";
@@ -291,25 +314,34 @@ function renderTimeline() {
     if (res) {
       const hPx = calculateHeight(res.start, res.end);
 
-      const leader = res.people[0]?.name || "예약자";
-      const count = res.people.length - 1;
+      const hasUserInfo = hasRealUserInfo(res.people);
 
-      const titleText = count > 0 ? `${res.title} - ${leader} 외 ${count}명` : `${res.title} - ${leader}`;
+      let titleText = res.title;
+
+      if (hasUserInfo) {
+        const leader = res.people[0]?.name || "";
+        const count = res.people.length - 1;
+
+        titleText =
+          count > 0
+            ? `${res.title} - ${leader} 외 ${count}명`
+            : `${res.title} - ${leader}`;
+      }
 
       content = `
-                <div class="card" style="height:${hPx - 4}px;" onclick="openModal('${res.start}')">
-                    <span>${titleText}</span>
-                    <small>${res.start} - ${res.end}</small>
-                </div>
-            `;
+        <div class="card" style="height:${hPx - 4}px;" onclick="openModal('${res.start}')">
+          <span>${titleText}</span>
+          <small>${res.start} - ${res.end}</small>
+        </div>
+      `;
     } else if (!isInside) {
       content = `<div class="empty-slot">예약가능</div>`;
     }
 
     row.innerHTML = `
-            <div class="time-label">${timeStr}</div>
-            <div class="slot">${content}</div>
-        `;
+      <div class="time-label">${timeStr}</div>
+      <div class="slot">${content}</div>
+    `;
 
     container.appendChild(row);
   }
@@ -329,34 +361,58 @@ function updateAll() {
     weekday: "short",
   });
 
-  document.getElementById("current-date-text").innerText = `${monthDay} (${week})`;
+  document.getElementById(
+    "current-date-text"
+  ).innerText = `${monthDay} (${week})`;
 
   const now = new Date();
 
-  const curTime = `${String(now.getHours()).padStart(2, "0")}:` + `${String(now.getMinutes()).padStart(2, "0")}`;
+  const curTime =
+    `${String(now.getHours()).padStart(2, "0")}:` +
+    `${String(now.getMinutes()).padStart(2, "0")}`;
 
   const dateKey = getDateKey(currentDate);
   const data = reservationData[dateKey]?.[currentRoom] || [];
 
-  const active = data.find((r) => curTime >= r.start && curTime < r.end);
+  const active = data.find(
+    (r) => curTime >= r.start && curTime < r.end
+  );
 
   const bar = document.getElementById("status-bar");
 
   if (active) {
     bar.classList.add("active");
 
-    const leader = active.people[0]?.name || "예약자";
-    const count = active.people.length - 1;
+    const hasUserInfo = hasRealUserInfo(active.people);
 
-    const text = count > 0 ? `${active.title} - ${leader} 외 ${count}명` : `${active.title} - ${leader}`;
+    let text = active.title;
 
-    document.getElementById("current-status").innerHTML = `<strong>${text}</strong>`;
-    document.getElementById("status-time").innerText = `${active.start} - ${active.end}`;
+    if (hasUserInfo) {
+      const leader = active.people[0]?.name || "";
+      const count = active.people.length - 1;
+
+      text =
+        count > 0
+          ? `${active.title} - ${leader} 외 ${count}명`
+          : `${active.title} - ${leader}`;
+    }
+
+    document.getElementById(
+      "current-status"
+    ).innerHTML = `<strong>${text}</strong>`;
+
+    document.getElementById(
+      "status-time"
+    ).innerText = `${active.start} - ${active.end}`;
   } else {
     bar.classList.remove("active");
 
-    document.getElementById("current-status").innerHTML = `<strong>이용 가능</strong>`;
-    document.getElementById("status-time").innerText = "현재 예약 없음";
+    document.getElementById(
+      "current-status"
+    ).innerHTML = `<strong>이용 가능</strong>`;
+
+    document.getElementById("status-time").innerText =
+      "현재 예약 없음";
   }
 
   renderTimeline();
@@ -365,7 +421,8 @@ function updateAll() {
 /* --- 실시간 시계 --- */
 
 function updateClock() {
-  document.getElementById("live-clock").innerText = new Date().toTimeString().split(" ")[0];
+  document.getElementById("live-clock").innerText =
+    new Date().toTimeString().split(" ")[0];
 }
 
 /* --- 모달 열기 --- */
@@ -378,32 +435,57 @@ window.openModal = (start) => {
 
   if (!res) return;
 
-  const leader = res.people[0]?.name || "예약자";
-  const count = res.people.length - 1;
+  const hasUserInfo = hasRealUserInfo(res.people);
 
-  const titleText = count > 0 ? `${res.title} - ${leader} 외 ${count}명` : `${res.title} - ${leader}`;
+  let titleText = res.title;
+
+  if (hasUserInfo) {
+    const leader = res.people[0]?.name || "";
+    const count = res.people.length - 1;
+
+    titleText =
+      count > 0
+        ? `${res.title} - ${leader} 외 ${count}명`
+        : `${res.title} - ${leader}`;
+  }
 
   document.getElementById("modal-title").innerText = titleText;
 
-  document.getElementById("m-name").innerText = res.people.map((p) => p.name).join(", ");
+  const userBox = document.querySelector(".user-data");
 
-  document.getElementById("m-grade").innerText = res.people.map((p) => p.grade).join(", ");
+  if (hasUserInfo) {
+    userBox.style.display = "block";
 
-  document.getElementById("m-id").innerText = res.people.map((p) => p.id).join(", ");
+    document.getElementById("m-name").innerText =
+      res.people.map((p) => p.name).join(", ");
 
-  document.getElementById("m-time").innerText = `${res.start} - ${res.end}`;
+    document.getElementById("m-grade").innerText =
+      res.people.map((p) => p.grade).join(", ");
 
-  document.getElementById("m-room").innerText = currentRoom + "호";
+    document.getElementById("m-id").innerText =
+      res.people.map((p) => p.id).join(", ");
+  } else {
+    userBox.style.display = "none";
+  }
+
+  document.getElementById(
+    "m-time"
+  ).innerText = `${res.start} - ${res.end}`;
+
+  document.getElementById("m-room").innerText =
+    currentRoom + "호";
 
   document.getElementById("m-date").innerText = dateKey;
 
-  document.getElementById("detail-modal").style.display = "flex";
+  document.getElementById("detail-modal").style.display =
+    "flex";
 };
 
 /* --- 모달 닫기 --- */
 
 function closeModal() {
-  document.getElementById("detail-modal").style.display = "none";
+  document.getElementById("detail-modal").style.display =
+    "none";
 }
 
 /* --- 페이지 시작 --- */
