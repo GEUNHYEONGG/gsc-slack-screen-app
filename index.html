@@ -16,8 +16,12 @@
     <!-- 브라우저 탭 제목 -->
     <title>강의실 예약 시스템</title>
 
+    <!-- 이모지 지원 -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- CSS 파일 연결 (디자인 담당) -->
     <link rel="stylesheet" href="style.css" />
+    
   </head>
 
   <body>
@@ -127,7 +131,9 @@
           <div class="modal-header">
             <!-- 예약 아이콘 -->
             <div class="icon-box">
-              <span id="modal-icon">💬</span>
+              <span id="modal-icon">
+                <i class="fa-regular fa-comments"></i>
+              </span>
             </div>
 
             <!-- 예약 제목 -->
@@ -144,23 +150,24 @@
             </div>
           </div>
 
+
           <!-- 예약 시간 / 강의실 / 날짜 -->
           <div class="info-section">
             <!-- 예약 시간 -->
             <div class="info-item">
-              <span>🕒</span>
+              <span><i class="fa-regular fa-clock"></i></span>
               <span id="m-time">-</span>
             </div>
 
             <!-- 예약 강의실 -->
             <div class="info-item">
-              <span>📍</span>
+              <span><i class="fa-solid fa-location-dot"></i></span>
               <span id="m-room">-</span>
             </div>
 
             <!-- 예약 날짜 -->
             <div class="info-item">
-              <span>📅</span>
+              <span><i class="fa-regular fa-calendar"></i></span>
               <span id="m-date">-</span>
             </div>
           </div>
