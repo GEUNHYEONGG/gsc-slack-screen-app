@@ -20,6 +20,24 @@ function getDateKey(date) {
   return date.toISOString().slice(0, 10);
 }
 
+/* --- 날짜 비교 --- */
+
+function isSameDate(a, b) {
+  return getDateKey(a) === getDateKey(b);
+}
+
+/* --- 오늘 날짜 자동 동기화 --- */
+
+function syncTodayIfNeeded() {
+  const today = new Date();
+
+  if (!isSameDate(currentDate, today)) {
+    currentDate = today;
+    saveState();
+    loadCalendarData();
+  }
+}
+
 /* --- 상태 저장 --- */
 
 function saveState() {
@@ -38,6 +56,11 @@ function loadState() {
   if (d) currentDate = new Date(d);
   if (r === "301" || r === "405") currentRoom = r;
   if (s !== null) isShowAll = s === "true";
+
+  if (!isSameDate(currentDate, new Date())) {
+    currentDate = new Date();
+    saveState();
+  }
 }
 
 /* --- 구글 API 로드 완료 후 실행 --- */
@@ -196,6 +219,7 @@ function init() {
   setInterval(updateClock, 1000);
 
   setInterval(() => {
+    syncTodayIfNeeded();
     updateAll();
     loadCalendarData();
   }, 60000);
@@ -246,10 +270,10 @@ function renderTimeline() {
       startMin = roundedNowMin;
     }
 
-    endMin = roundedNowMin + 180;
+    endMin = Math.min(roundedNowMin + 180, 24 * 60);
   }
 
-  for (let min = startMin; min < endMin; min += 15) {
+  for (let min = startMin; min <= endMin; min += 15) {
     const h = Math.floor(min / 60);
     const m = min % 60;
 
