@@ -20,14 +20,15 @@ body {
     -apple-system,
     sans-serif;
   margin: 0;
-  background: #f0f2f5;
+  background: white;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 }
 
 /* 앱 전체를 감싸는 박스 */
 .phone-mockup {
-  width: calc(100vw - 40px);
+  width: 100vw;
   height: 100vh;
   background: white;
   position: relative;
