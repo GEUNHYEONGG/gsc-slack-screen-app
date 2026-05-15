@@ -28,7 +28,6 @@ body {
 /* 앱 전체를 감싸는 박스 */
 .phone-mockup {
   width: 100vw;
-  max-width: 450px;
   height: 100vh;
   background: white;
   position: relative;
@@ -160,7 +159,7 @@ header {
 
 /* 왼쪽 시간 표시 */
 .time-label {
-  width: 35;
+  width: 50;
   font-size: 12px;
   color: #adb5bd;
   font-weight: 700;
