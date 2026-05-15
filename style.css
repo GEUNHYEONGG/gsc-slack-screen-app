@@ -20,7 +20,7 @@ body {
     -apple-system,
     sans-serif;
   margin: 0;
-  background: #f0f2f5;
+  background: white;
   display: flex;
   justify-content: center;
   overflow: hidden;
@@ -56,10 +56,10 @@ header {
   flex: 1;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
-  padding: 7px 0;
-  border-radius: 10px;
+  padding: 10px 0;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: bold;
   color: #495057;
 }
@@ -78,9 +78,20 @@ header {
   align-items: center;
 }
 
+/* 학교 정보 */
+.school-info h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.school-info p {
+  font-size: 18px;
+  margin: 0;
+}
+
 /* 실시간 시계 */
 .clock {
-  font-size: 26px;
+  font-size: 52px;
   font-weight: 800;
   color: var(--header-blue);
   letter-spacing: -1px;
@@ -91,9 +102,9 @@ header {
   background: #20c997;
   color: white;
   border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 11px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -109,13 +120,13 @@ header {
 .tab {
   flex: 1;
   text-align: center;
-  padding: 10px;
+  padding: 14px;
   border: 1px solid #dee2e6;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   font-weight: 800;
   color: #495057;
-  font-size: 13px;
+  font-size: 22px;
   transition: 0.2s;
 }
 
@@ -130,13 +141,14 @@ header {
 /* 현재 강의실 상태 박스 */
 .status-box {
   margin: 0 15px 10px;
-  padding: 12px;
-  border-radius: 20px;
+  padding: 16px;
+  border-radius: 22px;
   background: #868e96;
   color: white;
   text-align: center;
   transition: 0.3s;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-size: 24px;
 }
 
 /* 예약 중일 때 상태 박스 */
@@ -148,7 +160,7 @@ header {
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: 5px 8px 5px 12px;
+  padding: 5px 24px 5px 12px;
   position: relative;
 }
 
@@ -160,8 +172,8 @@ header {
 
 /* 왼쪽 시간 표시 */
 .time-label {
-  width: 50;
-  font-size: 12px;
+  width: 50px;
+  font-size: 18px;
   color: #adb5bd;
   font-weight: 700;
   margin-top: -6px;
@@ -180,13 +192,14 @@ header {
   left: 4px;
   right: 4px;
   top: 2px;
-  padding: 8px 12px;
-  border-radius: 14px;
+  padding: 14px 18px;
+  border-radius: 18px;
   color: white;
   cursor: pointer;
   z-index: 10;
   background: var(--blue-grad);
   box-shadow: 0 4px 10px rgba(51, 154, 240, 0.2);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -194,19 +207,19 @@ header {
 
 /* 예약 카드 제목 */
 .card span {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
 }
 
 /* 예약 카드 시간 */
 .card small {
-  font-size: 9px;
-  opacity: 0.8;
+  font-size: 16px;
+  opacity: 0.9;
 }
 
 /* 예약 없는 칸 */
 .empty-slot {
-  font-size: 11px;
+  font-size: 16px;
   color: #dee2e6;
   padding-top: 8px;
   text-align: center;
@@ -235,7 +248,7 @@ header {
 /* 실제 모달 박스 */
 .modal-content {
   width: 85%;
-  max-width: 360px;
+  max-width: 420px;
   border-radius: 30px;
   padding: 25px;
   color: white;
@@ -249,7 +262,7 @@ header {
   position: absolute;
   top: 18px;
   right: 22px;
-  font-size: 26px;
+  font-size: 32px;
   cursor: pointer;
   color: white;
 }
@@ -264,15 +277,15 @@ header {
 
 /* 모달 아이콘 원형 박스 */
 .icon-box {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: 26px;
 }
 
 /* 모달 제목 영역 */
@@ -283,13 +296,13 @@ header {
 }
 
 .sub-label {
-  font-size: 11px;
+  font-size: 14px;
   opacity: 0.8;
   margin-bottom: 2px;
 }
 
 .main-title {
-  font-size: 20px !important;
+  font-size: 28px !important;
   font-weight: 800;
   line-height: 1.3;
   word-break: keep-all;
@@ -302,7 +315,7 @@ header {
   display: block;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 18px;
-  padding: 16px;
+  padding: 18px;
   margin-bottom: 12px;
 }
 
@@ -311,8 +324,8 @@ header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 8px;
-  font-size: 15px;
+  margin-bottom: 10px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -332,7 +345,7 @@ header {
 }
 
 .section-label {
-  font-size: 12px !important;
+  font-size: 15px !important;
   margin-bottom: 10px !important;
   opacity: 0.8;
   font-weight: 700;
@@ -344,7 +357,7 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-size: 14px;
+  font-size: 18px;
   margin-bottom: 8px;
 }
 
@@ -365,7 +378,7 @@ header {
 /* 모달 아래 확인 버튼 */
 .btn-footer-close {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: white;
   border: none;
   border-radius: 18px;
@@ -373,5 +386,5 @@ header {
   font-weight: 800;
   cursor: pointer;
   margin-top: 8px;
-  font-size: 15px;
+  font-size: 18px;
 }
