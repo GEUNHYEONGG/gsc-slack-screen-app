@@ -26,7 +26,8 @@ body {
 
 /* 화면 오른쪽 잘림 방지용 */
 .phone-mockup {
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   height: 100vh;
   background: white;
   position: relative;
@@ -124,7 +125,7 @@ header {
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: 5px 24px 5px 12px;
+  padding: 5px 10px 5px 12px;
   position: relative;
 }
 
@@ -376,11 +377,4 @@ header {
 
 header {
   padding: 10px 15px;
-}
-/* 라즈베리파이 화면에서만 오른쪽 잘림 보정 */
-@media screen and (width: 800px) and (height: 480px) {
-  .phone-mockup {
-    width: calc(100vw - 45px);
-    margin-right: 45px;
-  }
 }
