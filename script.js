@@ -239,7 +239,7 @@ function toMin(t) {
 /* --- 카드 높이 계산 --- */
 
 function calculateHeight(s, e) {
-  return ((toMin(e) - toMin(s)) / 15) * 40;
+  return ((toMin(e) - toMin(s)) / 15) * 60;
 }
 
 /* --- 사용자 정보 여부 --- */

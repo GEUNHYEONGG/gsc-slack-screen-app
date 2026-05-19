@@ -133,7 +133,7 @@ header {
 /* 시간표 한 줄 */
 .time-row {
   display: flex;
-  height: 40px;
+  height: 60px;
 }
 
 /* 왼쪽 시간 표시 */
@@ -173,13 +173,13 @@ header {
 
 /* 예약 카드 제목 */
 .card span {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
 }
 
 /* 예약 카드 시간 */
 .card small {
-  font-size: 13px;
+  font-size: 16px;
   opacity: 0.9;
 }
 
