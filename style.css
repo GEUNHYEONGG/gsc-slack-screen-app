@@ -21,12 +21,10 @@ body {
     sans-serif;
   margin: 0;
   background: white;
-  display: flex;
-  justify-content: center;
   overflow: hidden;
 }
 
-/* 앱 전체를 감싸는 박스 */
+/* 화면 오른쪽 잘림 방지용 */
 .phone-mockup {
   width: 100vw;
   height: 100vh;
@@ -378,4 +376,11 @@ header {
 
 header {
   padding: 10px 15px;
+}
+/* 라즈베리파이 화면에서만 오른쪽 잘림 보정 */
+@media screen and (width: 800px) and (height: 480px) {
+  .phone-mockup {
+    width: calc(100vw - 45px);
+    margin-right: 45px;
+  }
 }
