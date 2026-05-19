@@ -26,7 +26,8 @@ body {
 
 /* 화면 오른쪽 잘림 방지용 */
 .phone-mockup {
-  width: 100%;
+  width: calc(100% - 20px);
+  margin-right: 20px;
   max-width: 100%;
   height: 100vh;
   background: white;
