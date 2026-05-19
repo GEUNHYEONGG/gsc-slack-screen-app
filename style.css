@@ -39,74 +39,40 @@ body {
 
 /* 상단 헤더 영역 */
 header {
-  padding: 10px 15px;
+  padding: 10px 12px;
   border-bottom: 1px solid #f1f3f5;
 }
 
-/* 전날, 금일, 다음날 버튼 묶음 */
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  gap: 6px;
-}
-
-/* 날짜 이동 버튼 공통 디자인 */
-.nav-btn {
-  flex: 1;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-  padding: 10px 0;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  color: #495057;
-}
-
-/* 금일 버튼 */
-.nav-btn.today {
-  background: linear-gradient(135deg, #ff8787 0%, #b197fc 100%);
-  color: white;
-  border: none;
-}
-
-/* 학교명, 날짜, 시계, 전체 예약표 버튼 */
 .header-main {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  gap: 8px;
 }
 
-/* 학교 정보 */
-.school-info h2 {
-  font-size: 28px;
-  margin: 0;
+.header-info {
+  min-width: 0;
 }
 
-.school-info p {
-  font-size: 18px;
-  margin: 0;
-}
-
-/* 실시간 시계 */
 .clock {
-  font-size: 52px;
+  font-size: 46px;
   font-weight: 800;
   color: var(--header-blue);
   letter-spacing: -1px;
+  white-space: nowrap;
 }
 
-/* 전체 예약표 버튼 */
 .btn-all {
+  justify-self: end;
   background: #20c997;
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 12px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 /* 강의실 탭 묶음 */
@@ -207,13 +173,13 @@ header {
 
 /* 예약 카드 제목 */
 .card span {
-  font-size: 26px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 /* 예약 카드 시간 */
 .card small {
-  font-size: 16px;
+  font-size: 13px;
   opacity: 0.9;
 }
 
@@ -387,4 +353,29 @@ header {
   cursor: pointer;
   margin-top: 8px;
   font-size: 18px;
+}
+.top-nav {
+  display: flex;
+  gap: 8px;
+  padding: 0 0 8px 0;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 42px;
+  border: none;
+  border-radius: 12px;
+  background: #f1f3f5;
+  font-size: 18px;
+  font-weight: 800;
+  color: #333;
+}
+
+.nav-btn.today {
+  background: linear-gradient(135deg, #ff8787 0%, #b197fc 100%);
+  color: white;
+}
+
+header {
+  padding: 10px 15px;
 }
